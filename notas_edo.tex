@@ -365,6 +365,37 @@
 	
 	\textbf{Observación:} La aplicación $\varphi_t:U\to U$ definida por $\varphi_t(x) = \varphi_X(t,x)$ es un difeomorfismo de clase $C^k$ (si es que $X$ es de clase $C^k$) y su inversa es $\varphi_t^{-1} = \varphi_{-t}$.
 	
+	\section*{Definición del Corchete de Lie mediante Pull-back}
+	
+	Existe una caracterización geométrica fundamental que define el corchete de Lie midiendo cómo varía el campo $Y$ al ser transportado de regreso ("pull-back") a lo largo de las curvas integrales del campo $X$.
+	
+	Sean $U \subseteq \mathbb{R}^n$ un abierto, $X, Y \in \mathcal{X}^1(U)$ dos campos vectoriales y sea $\varphi_t$ el flujo local asociado al campo $X$.
+	
+	\begin{definicion}[Pull-back de un Campo Vectorial por el Flujo]
+		Dado que para cada $t$ suficientemente pequeño $\varphi_t : U \to U$ es un difeomorfismo local, el \textbf{pull-back} de $Y$ a lo largo de $\varphi_t$, denotado por $\varphi_t^* Y$, es el campo vectorial definido en $p \in U$ mediante:
+		\[
+		(\varphi_t^* Y)(p) = \left( d\varphi_t(p) \right)^{-1} Y(\varphi_t(p)) = d\varphi_{-t}(\varphi_t(p)) \cdot Y(\varphi_t(p))
+		\]
+		donde $d\varphi_t(p)$ denota la diferencial (matriz jacobiana) de la aplicación $\varphi_t$ evaluada en $p$.
+	\end{definicion}
+	
+	\begin{definicion}[Corchete de Lie como Derivada de Lie]
+		El \textbf{corchete de Lie} $[X, Y]$ se define como la \textbf{derivada de Lie} del campo $Y$ a lo largo de $X$ (denotada $\mathcal{L}_X Y$), la cual se obtiene como la derivada en $t=0$ del pull-back de $Y$:
+		\[
+		[X, Y](p) \equiv (\mathcal{L}_X Y)(p) = \lim_{t \to 0} \frac{(\varphi_t^* Y)(p) - Y(p)}{t} = \left. \frac{d}{dt} \right|_{t=0} (\varphi_t^* Y)(p)
+		\]
+	\end{definicion}
+	
+	\subsection*{Interpretación Geométrica y Conmutatividad}
+	
+	\begin{itemize}
+		\item \textbf{Significado físico/geométrico:} La cantidad $(\varphi_t^* Y)(p)$ toma el vector $Y$ en el punto trasladado $\varphi_t(p)$ y lo retrocede al punto original $p$ usando la diferencial inversa $d\varphi_{-t}$. La derivada en $t=0$ mide qué tanto falla el campo $Y$ en ser invariante bajo la acción del flujo de $X$.
+		\item \textbf{Conmutatividad de flujos:} Si $\psi_s$ denota el flujo del campo $Y$, se verifica el siguiente resultado fundamental:
+		\[
+		[X, Y] = 0 \iff \varphi_t \circ \psi_s = \psi_s \circ \varphi_t \quad \text{(los flujos conmutan)}.
+		\]
+	\end{itemize}
+	
 	\section*{Corchete de Lie de Campos Vectoriales}
 	
 	Sean $U \subseteq \mathbb{R}^n$ un conjunto abierto y $X, Y \in \mathcal{X}^1(U)$ dos campos vectoriales de clase $C^1$ definidos sobre $U$.
@@ -405,37 +436,6 @@
 		[X, f Y] = f [X, Y] + X(f) Y
 		\]
 	\end{enumerate}
-	
-	\section*{Definición del Corchete de Lie mediante Pull-back}
-	
-	Existe una caracterización geométrica fundamental que define el corchete de Lie midiendo cómo varía el campo $Y$ al ser transportado de regreso ("pull-back") a lo largo de las curvas integrales del campo $X$.
-	
-	Sean $U \subseteq \mathbb{R}^n$ un abierto, $X, Y \in \mathcal{X}^1(U)$ dos campos vectoriales y sea $\varphi_t$ el flujo local asociado al campo $X$.
-	
-	\begin{definicion}[Pull-back de un Campo Vectorial por el Flujo]
-		Dado que para cada $t$ suficientemente pequeño $\varphi_t : U \to U$ es un difeomorfismo local, el \textbf{pull-back} de $Y$ a lo largo de $\varphi_t$, denotado por $\varphi_t^* Y$, es el campo vectorial definido en $p \in U$ mediante:
-		\[
-		(\varphi_t^* Y)(p) = \left( d\varphi_t(p) \right)^{-1} Y(\varphi_t(p)) = d\varphi_{-t}(\varphi_t(p)) \cdot Y(\varphi_t(p))
-		\]
-		donde $d\varphi_t(p)$ denota la diferencial (matriz jacobiana) de la aplicación $\varphi_t$ evaluada en $p$.
-	\end{definicion}
-	
-	\begin{definicion}[Corchete de Lie como Derivada de Lie]
-		El \textbf{corchete de Lie} $[X, Y]$ se define como la \textbf{derivada de Lie} del campo $Y$ a lo largo de $X$ (denotada $\mathcal{L}_X Y$), la cual se obtiene como la derivada en $t=0$ del pull-back de $Y$:
-		\[
-		[X, Y](p) \equiv (\mathcal{L}_X Y)(p) = \lim_{t \to 0} \frac{(\varphi_t^* Y)(p) - Y(p)}{t} = \left. \frac{d}{dt} \right|_{t=0} (\varphi_t^* Y)(p)
-		\]
-	\end{definicion}
-	
-	\subsection*{Interpretación Geométrica y Conmutatividad}
-	
-	\begin{itemize}
-		\item \textbf{Significado físico/geométrico:} La cantidad $(\varphi_t^* Y)(p)$ toma el vector $Y$ en el punto trasladado $\varphi_t(p)$ y lo retrocede al punto original $p$ usando la diferencial inversa $d\varphi_{-t}$. La derivada en $t=0$ mide qué tanto falla el campo $Y$ en ser invariante bajo la acción del flujo de $X$.
-		\item \textbf{Conmutatividad de flujos:} Si $\psi_s$ denota el flujo del campo $Y$, se verifica el siguiente resultado fundamental:
-		\[
-		[X, Y] = 0 \iff \varphi_t \circ \psi_s = \psi_s \circ \varphi_t \quad \text{(los flujos conmutan)}.
-		\]
-	\end{itemize}
 	
 	\subsection*{Ejercicio 1: Demostración de que $X$ es una derivación}
 	

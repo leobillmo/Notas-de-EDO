@@ -1,0 +1,535 @@
+% !TEX program = pdflatex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[expansion=false]{microtype}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{xcolor}
+\geometry{margin=2.7cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue!60!black,
+	urlcolor=blue!60!black,
+	citecolor=blue!60!black
+}
+
+%------------------------------------------------
+% Entornos
+%------------------------------------------------
+\theoremstyle{definition}
+\newtheorem{definicion}{Definición}[section]
+\newtheorem{ejemplo}{Ejemplo}[section]
+
+\theoremstyle{plain}
+\newtheorem{proposicion}{Proposición}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{corolario}{Corolario}[section]
+\newtheorem{lema}{Lema}[section]
+
+\theoremstyle{remark}
+\newtheorem{observacion}{Observación}[section]
+
+%------------------------------------------------
+% Comandos
+%------------------------------------------------
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\I}{[0,1]}
+\newcommand{\Hol}{\mathcal H}
+\newcommand{\OO}{\mathcal O}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\restr}[2]{\left.#1\right|_{#2}}
+
+\title{\textbf{EDO}\\
+	\large apuntes}
+\author{}
+\date{}
+
+\begin{document}
+	\section{Soluciones Maximales}
+	Sea $U \subseteq \mathbb{R}^n$ abierto, $x_0 \in U$, $t_0 \in \mathbb{R}$ y $X \in \mathcal{X}^1(U)$. Por el Teorema de Picard, el P.V.I.
+	\begin{equation*}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_0) &=& x_0
+		\end{array}
+		\right.
+	\end{equation*}
+	admite una única solución local $\varphi : I_\alpha[t_0] \to B_r[x_0] \subseteq U$ donde $\alpha = \frac{r}{M}$ y siendo $M = \|X\|_{C(B_r[x_0])}$.
+	
+	Una pregunta natural sería: ¿Podemos extender la solución dada a un intervalo $J$ que contenga a $I_\alpha[t_0]$ y tal que la extensión siga siendo solución del P.V.I.? Como veremos a continuación, la respuesta a esta interrogante es afirmativa.
+	
+	\begin{definicion}
+		Sean $U \subseteq \mathbb{R}^n$ abierto, $X \in \mathcal{X}^0(U)$, $x_0 \in U$, $t_0 \in \mathbb{R}$ y consideremos el P.V.I.:
+		\begin{equation}\label{eq:517}
+			\left| 
+			\begin{array}{lcl}
+				x' &=& X(x) \\
+				x(t_0) &=& x_0
+			\end{array}
+			\right.
+		\end{equation}
+		Una solución $\varphi_M : I_M \to \mathbb{R}^n$ de \eqref{eq:517} es llamada \textit{solución maximal} y su dominio $I_M$ es llamado \textit{intervalo maximal} si y sólo si toda solución $\psi : J \to \mathbb{R}^n$ del P.V.I. \eqref{eq:517} tal que $I_M \subseteq J$ y $\left.\psi\right|_{I_M} = \varphi_M$ implica que $I_M = J$.
+	\end{definicion}
+	\noindent \textbf{Observaciones:}
+	\begin{enumerate}
+		\item Una solución $\varphi_M$ de \eqref{eq:517} es maximal si y sólo si no admite extensiones las cuales sean también solución del P.V.I. \eqref{eq:517}.
+		\item Tanto la solución maximal $\varphi_M$ como el intervalo maximal $I_M$ dependen del par $(t_0, x_0) \in \mathbb{R} \times U$. Por esta razón denotaremos $\varphi_M = \varphi_{(t_0, x_0)}$ a la solución maximal y por $I_M = I(t_0, x_0)$ a su intervalo maximal.
+		\item Si $X \in \mathcal{X}^0(U)$ entonces su P.V.I. asociado puede admitir más de una solución maximal. En efecto, consideremos el P.V.I.
+		\begin{equation*}
+			\left| 
+			\begin{array}{lcl}
+				x' &=& 5x^{4/5} \\
+				x(0) &=& 0
+			\end{array}
+			\right.
+		\end{equation*}
+		entonces $\{\varphi_c\}_{c > 0}$ donde
+		\[
+		\begin{array}{rcccl}
+			\varphi_c : & \mathbb{R} &\to& \mathbb{R} \\
+			& t &\mapsto& \varphi(t) = \begin{cases} (t - c)^5, & \text{si } t \ge c \\ 0, & \text{si } t \le c \end{cases}
+		\end{array}
+		\]
+		es una familia infinita (no numerable) de soluciones maximales del P.V.I. dado.
+	\end{enumerate}
+	
+	El siguiente resultado establece que toda solución de un P.V.I. definida en un intervalo cerrado puede ser extendida a un intervalo abierto.
+	
+	\noindent \textbf{Proposición 5.4.1} Sea $U \subseteq \mathbb{R}^n$ abierto, $X \in \mathcal{X}^0(U)$ y suponga que para cualquier $(t_0, x_0) \in \mathbb{R} \times U$ el P.V.I.
+	\begin{equation}\label{eq:518}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_0) &=& x_0
+		\end{array}
+		\right.
+	\end{equation}
+	admite una única solución. Si $\varphi : [a,b] \to U$ (donde $t_0 \in [a,b]$) es solución del P.V.I. \eqref{eq:518} entonces ella puede ser extendida a un intervalo abierto $]a - \delta, b + \epsilon[$.
+	
+	\noindent \textbf{Demostración.} Sea $x_1 = \varphi(b) \in U$ y consideremos el P.V.I.
+	\begin{equation}\label{eq:519}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(b) &=& x_1
+		\end{array}
+		\right.
+	\end{equation}
+	
+	Por Picard, existe $\phi : I_\epsilon[b] \to U$ solución de \eqref{eq:519}. Defino $\psi : [a, b + \epsilon[ \to U$ como
+	\[
+	\psi(t) = \begin{cases} 
+		\varphi(t), & a \le t \le b \\ 
+		\phi(t), & b < t < b + \epsilon 
+	\end{cases}
+	\]
+	
+	Afirmo que $\psi$ es diferenciable en $b$. En efecto:
+	\[
+	\lim_{t \to b^+} \frac{\psi(t) - \psi(b)}{t - b} = \lim_{t \to b^+} \frac{\phi(t) - \phi(b)}{t - b} = \phi'_+(b) = \phi'(b) = X(\phi(b)) = X(x_1)
+	\]
+	Análogamente:
+	\[
+	\lim_{t \to b^-} \frac{\psi(t) - \psi(b)}{t - b} = \lim_{t \to b^-} \frac{\varphi(t) - \varphi(b)}{t - b} = \varphi'_-(b) = \varphi'(b) = X(\varphi(b)) = X(x_1)
+	\]
+	
+	Esto prueba la afirmación. Por otro lado, es claro que $\psi$ es solución del P.V.I. \eqref{eq:518} y por tanto, es una extensión de $\varphi$. Se procede de manera análoga con el extremo inferior. \hfill $\square$
+	
+	\noindent \textbf{Observación:} De ahora en adelante podemos suponer que las soluciones locales de un P.V.I. están definidas en un intervalo abierto.
+	
+	A continuación, probaremos que si el P.V.I. \eqref{eq:517} admite una única solución local para cada elección de $t_0 \in \mathbb{R}$ y $x_0 \in U$, entonces ella puede extenderse a una única solución maximal de \eqref{eq:517}.
+	
+	\noindent \textbf{Proposición 5.4.2} Sea $U \subseteq \mathbb{R}^n$ abierto y $X \in \mathcal{X}^0(U)$. Suponga que para todo $(t_0, x_0) \in \mathbb{R} \times U$, el P.V.I.
+	\begin{equation}\label{eq:520}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_0) &=& x_0
+		\end{array}
+		\right.
+	\end{equation}
+	admite una única solución local definida en un intervalo abierto. Entonces se cumple:
+	
+	\begin{enumerate}
+		\item Si $\psi_1 : J_1 \to U$ y $\psi_2 : J_2 \to U$ son soluciones de \eqref{eq:520} entonces $\left.\psi_1\right|_{J_1 \cap J_2} = \left.\psi_2\right|_{J_1 \cap J_2}$.
+		\item El P.V.I. \eqref{eq:520} admite una única solución maximal $\varphi_M = \varphi_M(t_0, x_0)$ definida en el intervalo abierto $I_M = I_M(t_0, x_0)$.
+	\end{enumerate}
+	
+	\noindent \textbf{Demostración.} 1.) Dados $t_0 \in \mathbb{R}$ y $x_0 \in U$, consideremos el conjunto
+	\[
+	C = \{t \in J_1 \cap J_2 \,;\, \psi_1(t) = \psi_2(t)\}.
+	\]
+	Es claro que $t_0 \in C$, luego $C \neq \emptyset$. También es claro que $C = (\psi_1 - \psi_2)^{-1}(\{0\}) \cap (J_1 \cap J_2)$, luego $C$ es cerrado en $J_1 \cap J_2$.
+	
+	Finalmente, sea $t' \in C$, entonces $\psi_1(t') = \psi_2(t') = x' \in U$. Consideremos el P.V.I.
+	\begin{equation*}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t') &=& x'
+		\end{array}
+		\right.
+	\end{equation*}
+	
+	Por hipótesis este P.V.I. admite una única solución $\phi$ definida en un intervalo abierto $I' = I'(t', x')$, luego
+	\[
+	\left.\psi_1\right|_{I' \cap (J_1 \cap J_2)} = \left.\phi\right|_{I' \cap (J_1 \cap J_2)} = \left.\psi_2\right|_{I' \cap (J_1 \cap J_2)}.
+	\]
+	
+	Se sigue que $t' \in I' \cap (J_1 \cap J_2) \subseteq C$, es decir $C$ es abierto.
+	
+	Desde que $J_1 \cap J_2$ es conexo, se sigue que $C = J_1 \cap J_2$.
+	
+	\noindent 2.) Dados $t_0 \in \mathbb{R}$ y $x_0 \in U$, consideremos el conjunto
+	\[
+	S = \{\psi : I_\psi \to \mathbb{R}^n \,;\, I_\psi \text{ es abierto y } \psi \text{ es solución del P.V.I. } \eqref{eq:520}\}.
+	\]
+	
+	Por hipótesis $S \neq \emptyset$. Definamos $I_M = I_M(t_0, x_0) = \bigcup_{\psi \in S} I_\psi$, claramente $I_M$ es un intervalo abierto y $t_0 \in I_M$. Para definir $\varphi_M : I_M \to \mathbb{R}^n$ tomemos un $t \in I_M$, entonces existe $\psi \in S$ tal que $t \in I_\psi$. Definimos $\varphi_M(t) = \psi(t)$. Por la parte 1.), la función $\varphi_M$ está bien definida, y es claro que ella es la única solución maximal del P.V.I. \eqref{eq:520}. \hfill $\square$
+	
+	\noindent \textbf{Corolario.} Sea $U \subseteq \mathbb{R}^n$ un abierto y $X \in \mathcal{X}^1(U)$. Entonces para todo $(t_0, x_0) \in \mathbb{R} \times U$, el P.V.I.
+	\begin{equation*}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_0) &=& x_0
+		\end{array}
+		\right.
+	\end{equation*}
+	admite una única solución maximal $\varphi_M = \varphi_M(t_0, x_0)$ definida en el intervalo abierto $I_M = I_M(t_0, x_0)$.
+	
+	\noindent \textbf{Notación:} Denotaremos respectivamente por $\omega_-(t_0, x_0)$ y $\omega_+(t_0, x_0)$ al extremo inferior y al superior del intervalo maximal $I_M(t_0, x_0)$, es decir
+	\[
+	I_M(t_0, x_0) = {]\omega_-(t_0, x_0), \omega_+(t_0, x_0)[}
+	\]
+	cuando no haya lugar a confusión con respecto a las condiciones iniciales, escribiremos simplemente $I_M = {]\omega_-, \omega_+[}$.
+	
+	\noindent \textbf{Observación:} No se puede garantizar que una solución $\varphi$ de un P.V.I. pueda extenderse a todo $\mathbb{R}$. En efecto, considere el P.V.I. escalar:
+	\begin{equation*}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& 1 + x^2 \\
+			x(0) &=& 0
+		\end{array}
+		\right.
+	\end{equation*}
+	cuya solución es dada por
+	\[
+	\begin{array}{rcccl}
+		\varphi : & {]-\pi/2, \pi/2[} &\to& \mathbb{R} \\
+		& t &\mapsto& \varphi(t) = \tan t
+	\end{array}
+	\]
+	es claro que ella es una solución maximal del P.V.I. considerado.
+	
+	A continuación vamos a estudiar qué sucede con las soluciones maximales $\varphi_M : {]\omega_-, \omega_+[} \to U$, cuando $\omega_-$ u $\omega_+$ es un número real.
+	
+	\noindent \textbf{Lema 5.4.1} Sean $X \in \operatorname{Lip}(B_r[x_0], \mathbb{R}^n)$, $t_0 \in \mathbb{R}$, $M = \|X\|_{C(B_r[x_0])}$ y $\alpha = \frac{r}{M}$. Entonces para todo $(t_1, x_1) \in I_{\frac{\alpha}{2}}[t_0] \times B_{\frac{r}{2}}[x_0]$, el P.V.I.:
+	\begin{equation}\label{eq:521}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_1) &=& x_1
+		\end{array}
+		\right.
+	\end{equation}
+	admite una única solución $\varphi_1$ (que depende de $(t_1, x_1)$) definida en el intervalo $I_{\frac{\alpha}{2}}[t_1] \subseteq I_\alpha[t_0]$, con valores en $B_{\frac{r}{2}}[x_1] \subseteq B_r[x_0]$.
+	
+	\noindent \textbf{Demostración.} Dados $t_1 \in I_{\frac{\alpha}{2}}[t_0]$ y $x_1 \in B_{\frac{r}{2}}[x_0]$, un fácil cálculo prueba que $I_{\frac{\alpha}{2}}[t_1] \subseteq I_\alpha[t_0]$ y $B_{\frac{r}{2}}[x_1] \subseteq B_r[x_0]$. Luego $M \ge \|X\|_{C(B_{\frac{r}{2}}[x_0])}$ y por el Teorema de Picard, existe una única solución $\varphi_1 = \varphi_1(t_1, x_1) : I_{\alpha_1}[t_1] \to B_{\frac{r}{2}}[x_0]$ del P.V.I. \eqref{eq:521}, en donde $\alpha_1 = \frac{r}{2M} = \frac{\alpha}{2}$. \hfill $\square$
+	
+	\noindent \textbf{Teorema 5.4.3} Sea $U \subseteq \mathbb{R}^n$ abierto, $(t_0, x_0) \in \mathbb{R} \times U$ y $X \in \mathcal{X}^1(U)$. Sea $\varphi$ solución maximal del P.V.I.:
+	\begin{equation}\label{eq:522}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_0) &=& x_0
+		\end{array}
+		\right.
+	\end{equation}
+	definida en el intervalo maximal $I_M = {]\omega_-, \omega_+[}$. Si $\omega_+ \in \mathbb{R}$, (resp. $\omega_- \in \mathbb{R}$), entonces para todo $K \subseteq U$ compacto, existe $W_+ \subseteq \mathbb{R}$ vecindad abierta de $\omega_+$ (resp. $W_- \subseteq \mathbb{R}$ vecindad abierta de $\omega_-$), tal que $t \in W_+ \cap [t_0, \omega_+[$ (resp. $t \in W_- \cap {]\omega_-, t_0]}$) implica $\varphi(t) \notin K$.
+	
+	\noindent \textbf{Demostración.} Vamos a trabajar con $\omega_+$, en el otro caso la demostración es análoga. Procediendo por contradicción, supongamos que existe un $K \subseteq U$ subconjunto compacto tal que para toda vecindad abierta $W$ de $\omega_+$, existe $t = t_W \in W \cap [t_0, \omega_+[$ tal que $\varphi(t_W) \in K$.
+	
+	Dado $k \in \mathbb{Z}^^+$, consideremos el intervalo $W_k = I_{\frac{1}{k}}(\omega_+)$, el cual es una vecindad abierta de $\omega_+$. Por la hipótesis auxiliar, existe un $t_k \in W_k \cap [t_0, \omega_+[$ tal que $\varphi(t_k) \in K$. De esta manera, hemos construido una sucesión $(t_k) \subseteq [t_0, \omega_+[$, tal que $\lim_{k \to \infty} t_k = \omega_+$ y $(\varphi(t_k)) \subseteq K$.
+	
+	Como $K$ es compacto, existe una subsucesión $(\varphi(t_{j_k}))$ convergente de $(\varphi(t_k))$, es decir $\lim_{k \to \infty} \varphi(t_{j_k}) = x_0$ y $x_0 \in K$.
+	
+	Como $x_0 \in U$, existe un $r = r(x_0) > 0$ tal que $B_r[x_0] \subseteq U$ y desde que $X \in \mathcal{X}^1(U)$ entonces $X$ es Lipschitz en $B_r[x_0]$. Como por hipótesis $\omega_+ \in \mathbb{R}$, por el Teorema de Picard, existe una única solución $\psi$ del P.V.I.
+	\begin{equation*}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(\omega_+) &=& x_0
+		\end{array}
+		\right.
+	\end{equation*}
+	definida en el intervalo $I_\alpha[\omega_+]$ donde $\alpha = \frac{r}{M}$ y $M = \|X\|_{C(B_r[x_0])}$.
+	
+	Del Lema 5.4.1 se tiene que para todo $(t_1, x_1) \in I_{\frac{\alpha}{2}}[\omega_+] \times B_{\frac{r}{2}}[x_0]$, el P.V.I.
+	\begin{equation*}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_1) &=& x_1
+		\end{array}
+		\right.
+	\end{equation*}
+	admite una única solución definida en $I_{\frac{\alpha}{2}}[t_1]$ con valores en $B_{\frac{r}{2}}[x_1]$.
+	
+	Ahora bien, como $\lim_{k \to \infty} t_{j_k} = \omega_+$ y $\lim_{k \to \infty} \varphi(t_{j_k}) = x_0$, se sigue que existe un $k_0 \in \mathbb{Z}^+$ tal que $k \ge k_0$ implica
+	\[
+	\omega_+ - \frac{\alpha}{2} < t_{j_k} < \omega_+ \quad \text{y} \quad |\varphi(t_{j_k}) - x_0| < \frac{r}{2},
+	\]
+	luego, si fijamos $k \ge k_0$ tenemos que $(t_{j_k}, \varphi(t_{j_k})) \in I_{\frac{\alpha}{2}}[\omega_+] \times B_{\frac{r}{2}}[x_0]$, luego el P.V.I.:
+	\begin{equation}\label{eq:523}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(t_{j_k}) &=& \varphi(t_{j_k})
+		\end{array}
+		\right.
+	\end{equation}
+	tiene una única solución $\psi_k : I_{\frac{\alpha}{2}}[t_{j_k}] \to B_{\frac{r}{2}}[\varphi(t_{j_k})] \subseteq B_r[x_0]$.
+	
+	Observe que $t_{j_k} < \omega_+ < t_{j_k} + \frac{\alpha}{2}$, de esta manera $\varphi : {]\omega_-, \omega_+[} \to U$
+	también es solución de \eqref{eq:523}. Se sigue que $\varphi(t) = \psi_k(t)$, para todo $t \in {]\omega_-, \omega_+[} \cap I_{\frac{\alpha}{2}}[t_{j_k}]$.
+	
+	Definimos $\phi : {]\omega_-, t_{j_k} + \frac{\alpha}{2}[} \to \mathbb{R}^n$ como
+	\[
+	\left.\phi\right|_{]\omega_-, \omega_+[} = \varphi \quad \text{y} \quad \left.\phi\right|_{I_{\frac{\alpha}{2}}(t_{j_k})} = \psi_k
+	\]
+	
+	Se sigue que $\phi$ es solución del P.V.I. \eqref{eq:522} cuyo dominio ${]\omega_-, t_{j_k} + \frac{\alpha}{2}[}$ contiene estrictamente al intervalo maximal ${]\omega_-, \omega_+[}$ lo cual constituye una contradicción. \hfill $\square$
+	\section*{6.1 El Flujo Asociado a un Campo Vectorial}
+	
+	De ahora en adelante, sólo consideraremos P.V.I.'s con instante inicial $t_0 = 0$. Sea $U \subseteq \mathbb{R}^n$ abierto y $X \in \mathcal{X}^1(U)$. Dado $x_0 \in U$, sabemos que el P.V.I.
+	\begin{equation}\label{eq:61}
+		\left| 
+		\begin{array}{lcl}
+			x' &=& X(x) \\
+			x(0) &=& x_0
+		\end{array}
+		\right.
+	\end{equation}
+	admite una única solución $\varphi : I_\alpha[0] \to B_r[x_0] \subseteq U$ (donde $\alpha = \frac{r}{M}$, siendo $M = \|X(x)\|_{C(B_r[x_0])}$), la cual puede ser extendida a su solución maximal $\varphi_{x_0} = \varphi_{(0,x_0)} : I(x_0) \to U$ (en donde $I(x_0) = {]\omega_-(x_0), \omega_+(x_0)[}$ es su intervalo maximal). Definamos el conjunto:
+	\[
+	D_X = \{(t,x) \,;\, x \in U \text{ y } t \in I(x)\} \subseteq \mathbb{R} \times \mathbb{R}^n
+	\]
+	y la función
+	\[
+	\begin{array}{rccc}
+		\varphi_X : & D_X & \to & U \\
+		& (t, x) & \mapsto & \varphi_X(t, x) = \varphi_x(t).
+	\end{array}
+	\]
+	La función $\varphi_X$ es llamada flujo asociado al campo vectorial $X$.
+	
+	\noindent \textbf{Lema 6.1.1} Sean $U \subseteq \mathbb{R}^n$ abierto y $X \in \mathcal{X}^1(U)$. Si $y_0 = \varphi_{x_0}(t_0)$ con $t_0 \in I(x_0)$ entonces:
+	\begin{enumerate}
+		\item[\textnormal{i)}] $\varphi_{x_0}(0) = x_0$.
+		\item[\textnormal{ii)}] $I(y_0) = I(x_0) - t_0 = \{t - t_0 \,;\, t \in I(x_0)\} = {]\omega_-(x_0) - t_0, \omega_+(x_0) - t_0[}$.
+		\item[\textnormal{iii)}] $\varphi_{y_0}(t) = \varphi_{x_0}(t + t_0), \quad \forall \; t \in I(y_0)$.
+	\end{enumerate}
+	
+	\noindent \textbf{Teorema 6.1.1} Sea $U \subseteq \mathbb{R}^n$ abierto y $X \in \mathcal{X}^1(U)$. Su flujo asociado $\varphi_X : D_X \to U$ satisface las siguientes propiedades:
+	
+	\begin{enumerate}
+		\item $\varphi_X(0, x) = x, \quad \forall \; x \in U$.
+		\item Si $(t, x) \in D_X$ y $(s, \varphi_x(t)) \in D_X$ entonces $(s + t, x) \in D_X$ y
+		\[
+		\varphi_X(s + t, x) = \varphi_X(s, \varphi_X(t, x)) \quad (\textit{Propiedad Fundamental del Flujo}).
+		\]
+	\end{enumerate}
+	
+	\noindent \textbf{Demostración.} 2.) Sea $y = \varphi_x(t)$. Por hipótesis y el lema anterior se tiene que $s \in I(y) = I(x) - t$ es decir $s + t \in I(x)$, por tanto $(s + t, x) \in D_X$. Además:
+	\[
+	\begin{aligned}
+		\varphi_X(t + s, x) &= \varphi_x(t + s) = \varphi_y(s) = \varphi_X(s, y) = \varphi_X(s, \varphi_x(t)) \\
+		&= \varphi_X(s, \varphi_X(t, x))
+	\end{aligned}
+	\]
+	\hfill $\square$
+	
+	\textbf{Observación:} La aplicación $\varphi_t:U\to U$ definida por $\varphi_t(x) = \varphi_X(t,x)$ es un difeomorfismo de clase $C^k$ (si es que $X$ es de clase $C^k$) y su inversa es $\varphi_t^{-1} = \varphi_{-t}$.
+	
+	\section*{Corchete de Lie de Campos Vectoriales}
+	
+	Sean $U \subseteq \mathbb{R}^n$ un conjunto abierto y $X, Y \in \mathcal{X}^1(U)$ dos campos vectoriales de clase $C^1$ definidos sobre $U$.
+	
+	\begin{definicion}[Corchete de Lie]
+		El \textbf{corchete de Lie} (o paréntesis de Lie) de los campos vectoriales $X$ e $Y$, denotado por $[X, Y]$, es el campo vectorial definido sobre $U$ dado por:
+		\[
+		[X, Y](p) = D Y(p) \cdot X(p) - D X(p) \cdot Y(p), \quad \forall \; p \in U
+		\]
+		donde $D X(p)$ y $D Y(p)$ denotan la matriz jacobiana (o diferencial) de los campos $X$ e $Y$ evaluadas en el punto $p$, respectivamente.
+		
+		En componentes, si $X = (X_1, \dots, X_n)$ e $Y = (Y_1, \dots, Y_n)$, la $i$-ésima componente de $[X, Y]$ está dada por:
+		\[
+		[X, Y]_i = \sum_{j=1}^n \left( X_j \frac{\partial Y_i}{\partial x_j} - Y_j \frac{\partial X_i}{\partial x_j} \right), \quad i = 1, \dots, n
+		\]
+	\end{definicion}
+	
+	\subsection*{Caracterización como Operador Diferencial}
+	
+	Si se consideran los campos vectoriales $X, Y$ como derivaciones sobre el álgebra de funciones $C^\infty(U)$, el corchete de Lie es el único campo vectorial que satisface:
+	\[
+	[X, Y](f) = X(Y(f)) - Y(X(f)), \quad \forall \; f \in C^\infty(U)
+	\]
+	donde $X(f) = \nabla f \cdot X = \sum_{i=1}^n X_i \frac{\partial f}{\partial x_i}$ denota la derivada direccional de $f$ a lo largo de $X$.
+	
+	\subsection*{Propiedades Fundamentales}
+	
+	Para cualesquiera $X, Y, Z \in \mathcal{X}^1(U)$, $a, b \in \mathbb{R}$ y $f, g \in C^\infty(U)$:
+	\begin{enumerate}
+		\item \textbf{Bilinealidad:} $[a X + b Y, Z] = a [X, Z] + b [Y, Z]$.
+		\item \textbf{Antisimetría (o conmutatividad):} $[X, Y] = -[Y, X]$.
+		\item \textbf{Identidad de Jacobi:} 
+		\[
+		[X, [Y, Z]] + [Y, [Z, X]] + [Z, [X, Y]] = 0
+		\]
+		\item \textbf{Regla de Leibniz:} 
+		\[
+		[X, f Y] = f [X, Y] + X(f) Y
+		\]
+	\end{enumerate}
+	
+	\section*{Definición del Corchete de Lie mediante Pull-back}
+	
+	Existe una caracterización geométrica fundamental que define el corchete de Lie midiendo cómo varía el campo $Y$ al ser transportado de regreso ("pull-back") a lo largo de las curvas integrales del campo $X$.
+	
+	Sean $U \subseteq \mathbb{R}^n$ un abierto, $X, Y \in \mathcal{X}^1(U)$ dos campos vectoriales y sea $\varphi_t$ el flujo local asociado al campo $X$.
+	
+	\begin{definicion}[Pull-back de un Campo Vectorial por el Flujo]
+		Dado que para cada $t$ suficientemente pequeño $\varphi_t : U \to U$ es un difeomorfismo local, el \textbf{pull-back} de $Y$ a lo largo de $\varphi_t$, denotado por $\varphi_t^* Y$, es el campo vectorial definido en $p \in U$ mediante:
+		\[
+		(\varphi_t^* Y)(p) = \left( d\varphi_t(p) \right)^{-1} Y(\varphi_t(p)) = d\varphi_{-t}(\varphi_t(p)) \cdot Y(\varphi_t(p))
+		\]
+		donde $d\varphi_t(p)$ denota la diferencial (matriz jacobiana) de la aplicación $\varphi_t$ evaluada en $p$.
+	\end{definicion}
+	
+	\begin{definicion}[Corchete de Lie como Derivada de Lie]
+		El \textbf{corchete de Lie} $[X, Y]$ se define como la \textbf{derivada de Lie} del campo $Y$ a lo largo de $X$ (denotada $\mathcal{L}_X Y$), la cual se obtiene como la derivada en $t=0$ del pull-back de $Y$:
+		\[
+		[X, Y](p) \equiv (\mathcal{L}_X Y)(p) = \lim_{t \to 0} \frac{(\varphi_t^* Y)(p) - Y(p)}{t} = \left. \frac{d}{dt} \right|_{t=0} (\varphi_t^* Y)(p)
+		\]
+	\end{definicion}
+	
+	\subsection*{Interpretación Geométrica y Conmutatividad}
+	
+	\begin{itemize}
+		\item \textbf{Significado físico/geométrico:} La cantidad $(\varphi_t^* Y)(p)$ toma el vector $Y$ en el punto trasladado $\varphi_t(p)$ y lo retrocede al punto original $p$ usando la diferencial inversa $d\varphi_{-t}$. La derivada en $t=0$ mide qué tanto falla el campo $Y$ en ser invariante bajo la acción del flujo de $X$.
+		\item \textbf{Conmutatividad de flujos:} Si $\psi_s$ denota el flujo del campo $Y$, se verifica el siguiente resultado fundamental:
+		\[
+		[X, Y] = 0 \iff \varphi_t \circ \psi_s = \psi_s \circ \varphi_t \quad \text{(los flujos conmutan)}.
+		\]
+	\end{itemize}
+	
+	\subsection*{Ejercicio 1: Demostración de que $X$ es una derivación}
+	
+	Sean $f, g \in C^\infty(U)$, $c \in \mathbb{R}$ y $X \in \mathcal{X}^\infty(U)$ un campo vectorial. La aplicación $X : C^\infty(U) \to C^\infty(U)$ definida por $X(f)(p) = \langle \nabla f(p), X(p) \rangle$ cumple:
+	
+	\subsubsection*{1. Linealidad}
+	Para cualquier $p \in U$:
+	\[
+	\begin{aligned}
+		X(f + c g)(p) &= \langle \nabla(f + cg)(p), X(p) \rangle \\
+		&= \langle \nabla f(p) + c \nabla g(p), X(p) \rangle \\
+		&= \langle \nabla f(p), X(p) \rangle + c \langle \nabla g(p), X(p) \rangle \\
+		&= X(f)(p) + c X(g)(p)
+	\end{aligned}
+	\]
+	Por lo tanto, $X(f + cg) = X(f) + c X(g)$.
+	
+	\subsubsection*{2. Regla de Leibniz (Regla del Producto)}
+	Por la regla del producto para el gradiente en cálculo multivariable, sabemos que:
+	\[
+	\nabla(fg)(p) = f(p) \nabla g(p) + g(p) \nabla f(p)
+	\]
+	Evaluando $X(fg)$ en el punto $p$:
+	\[
+	\begin{aligned}
+		X(fg)(p) &= \langle \nabla(fg)(p), X(p) \rangle \\
+		&= \langle f(p) \nabla g(p) + g(p) \nabla f(p), X(p) \rangle \\
+		&= f(p) \langle \nabla g(p), X(p) \rangle + g(p) \langle \nabla f(p), X(p) \rangle \\
+		&= f(p) X(g)(p) + g(p) X(f)(p)
+	\end{aligned}
+	\]
+	Por lo tanto, en todo $U$ se satisface la identidad:
+	\[
+	X(fg) = f X(g) + g X(f)
+	\]
+	lo que prueba que el campo vectorial $X$ actúa como una \textbf{derivación} sobre el álgebra $C^\infty(U)$.
+	
+	\section*{Demostración de la Equivalencia de las Definiciones del Corchete de Lie}
+	
+	\begin{teorema}
+		Sean $U \subseteq \mathbb{R}^n$ un abierto, $X, Y \in \mathcal{X}^1(U)$ campos vectoriales, y sea $\varphi_t$ el flujo local generado por el campo $X$. La derivada de Lie del campo $Y$ a lo largo del flujo de $X$ coincide con la expresión analítica del corchete de Lie:
+		\[
+		\left. \frac{d}{dt} \right|_{t=0} (\varphi_t^* Y)(p) = DY(p) X(p) - DX(p) Y(p) \equiv [X, Y](p).
+		\]
+	\end{teorema}
+	
+	\begin{proof}
+		Sea $p \in U$. Recordemos que el \textit{pull-back} de $Y$ por la aplicación $\varphi_t$ en el punto $p$ está dado por:
+		\[
+		(\varphi_t^* Y)(p) = \left( d\varphi_t(p) \right)^{-1} Y(\varphi_t(p))
+		\]
+		donde $d\varphi_t(p) = D_x \varphi(t, p)$ representa la matriz jacobiana de la aplicación espacial $x \mapsto \varphi(t, x)$ evaluada en $p$.
+		
+		Para calcular la derivada con respecto a $t$ en $t=0$, desarrollaremos en serie de Taylor alrededor de $t=0$ los dos factores que componen el \textit{pull-back}:
+		
+		\subsubsection*{Paso 1: Expansión de $Y(\varphi_t(p))$}
+		Por la definición de flujo, $\varphi(0, p) = p$ y $\left.\frac{\partial \varphi}{\partial t}\right|_{t=0} = X(p)$. Aplicando la regla de la cadena para la expansión de Taylor de $Y$ en $t=0$:
+		\[
+		Y(\varphi_t(p)) = Y(p) + t \, DY(p) \cdot X(p) + O(t^2)
+		\]
+		
+		\subsubsection*{Paso 2: Expansión del operador diferencial inverso $(d\varphi_t(p))^{-1}$}
+		Por el Teorema de Schwarz sobre la conmutación de derivadas parciales, la derivada temporal de la diferencial espacial satisface:
+		\[
+		\left. \frac{d}{dt} \right|_{t=0} d\varphi_t(p) = d \left( \left. \frac{d\varphi_t}{dt} \right|_{t=0} \right)(p) = dX(p) = DX(p)
+		\]
+		Como $d\varphi_0(p) = I$ (la matriz identidad), la expansión de Taylor de la matriz $d\varphi_t(p)$ es:
+		\[
+		d\varphi_t(p) = I + t \, DX(p) + O(t^2)
+		\]
+		Utilizando la serie de Neumann para la inversa de matrices $(I + t A)^{-1} = I - t A + O(t^2)$, obtenemos:
+		\[
+		\left( d\varphi_t(p) \right)^{-1} = I - t \, DX(p) + O(t^2)
+		\]
+		
+		\subsubsection*{Paso 3: Producto de las expansiones}
+		Sustituyendo ambas expansiones en la expresión del \textit{pull-back}:
+		\[
+		\begin{aligned}
+			(\varphi_t^* Y)(p) &= \left( I - t \, DX(p) + O(t^2) \right) \left( Y(p) + t \, DY(p) X(p) + O(t^2) \right) \\
+			&= Y(p) + t \, DY(p) X(p) - t \, DX(p) Y(p) + O(t^2) \\
+			&= Y(p) + t \Big( DY(p) X(p) - DX(p) Y(p) \Big) + O(t^2)
+		\end{aligned}
+		\]
+		
+		\subsubsection*{Paso 4: Cálculo del límite (derivada en $t=0$)}
+		Finalmente, calculando la derivada por cociente incremental en $t=0$:
+		\[
+		\begin{aligned}
+			\left. \frac{d}{dt} \right|_{t=0} (\varphi_t^* Y)(p) &= \lim_{t \to 0} \frac{(\varphi_t^* Y)(p) - Y(p)}{t} \\
+			&= \lim_{t \to 0} \frac{t \Big( DY(p) X(p) - DX(p) Y(p) \Big) + O(t^2)}{t} \\
+			&= DY(p) X(p) - DX(p) Y(p)
+		\end{aligned}
+		\]
+		Esto demuestra que ambas definiciones representan exactamente el mismo campo vectorial.
+	\end{proof}
+\end{document}

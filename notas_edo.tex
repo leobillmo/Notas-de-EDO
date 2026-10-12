@@ -51,12 +51,14 @@
 \newcommand{\id}{\operatorname{id}}
 \newcommand{\restr}[2]{\left.#1\right|_{#2}}
 
-\title{\textbf{EDO}\\
-	\large apuntes}
+\title{\textbf{Notas de EDO}}
 \author{}
 \date{}
 
 \begin{document}
+	\maketitle
+	\textbf{Objetivo}
+	Notas del curso auto suficientes para los temas abarcados semana a semana
 	\section{Soluciones Maximales}
 	Sea $U \subseteq \mathbb{R}^n$ abierto, $x_0 \in U$, $t_0 \in \mathbb{R}$ y $X \in \mathcal{X}^1(U)$. Por el Teorema de Picard, el P.V.I.
 	\begin{equation*}
@@ -313,6 +315,7 @@
 	\]
 	
 	Se sigue que $\phi$ es solución del P.V.I. \eqref{eq:522} cuyo dominio ${]\omega_-, t_{j_k} + \frac{\alpha}{2}[}$ contiene estrictamente al intervalo maximal ${]\omega_-, \omega_+[}$ lo cual constituye una contradicción. \hfill $\square$
+	
 	\section*{6.1 El Flujo Asociado a un Campo Vectorial}
 	
 	De ahora en adelante, sólo consideraremos P.V.I.'s con instante inicial $t_0 = 0$. Sea $U \subseteq \mathbb{R}^n$ abierto y $X \in \mathcal{X}^1(U)$. Dado $x_0 \in U$, sabemos que el P.V.I.
@@ -395,6 +398,24 @@
 		[X, Y] = 0 \iff \varphi_t \circ \psi_s = \psi_s \circ \varphi_t \quad \text{(los flujos conmutan)}.
 		\]
 	\end{itemize}
+	
+	\begin{teorema}
+		Sean $X, Y \in \mathcal{X}^1(U)$ dos campos vectoriales de clase $C^1$, y sean $\varphi_t$ y $\psi_s$ sus respectivos flujos locales. Entonces:
+		\[
+		[X, Y] = 0 \iff \varphi_t \circ \psi_s = \psi_s \circ \varphi_t
+		\]
+		(para todo $t, s$ suficientemente pequeños).
+	\end{teorema}
+	
+	\begin{proof}
+		\textbf{$(\Leftarrow)$:} Supongamos que $\varphi_t(\psi_s(p)) = \psi_s(\varphi_t(p))$. Derivando con respecto a $s$ en $s = 0$:
+		\[
+		d\varphi_t(p) \cdot Y(p) = Y(\varphi_t(p)) \implies (\varphi_t^* Y)(p) = Y(p)
+		\]
+		Derivando esta última expresión con respecto a $t$ en $t = 0$ se obtiene $[X, Y](p) = 0$.
+		
+		\textbf{$(\Rightarrow)$:} Supongamos que $[X, Y] = 0$, lo que implica que el \textit{pull-back} es constante ($\varphi_t^* Y = Y$). Para un punto $p$ fijo, consideremos las curvas $f(t) = \varphi_t(\psi_s(p))$ y $g(t) = \psi_s(\varphi_t(p))$. Ambas parten de $\psi_s(p)$ en $t=0$ y satisfacen la misma EDO $\frac{dx}{dt} = X(x)$ (la segunda utilizando la invarianza del campo $X$ bajo el flujo de $Y$). Por la unicidad de las soluciones del P.V.I., se concluye que $f(t) = g(t)$, es decir, $\varphi_t \circ \psi_s = \psi_s \circ \varphi_t$.
+	\end{proof}
 	
 	\section*{Corchete de Lie de Campos Vectoriales}
 	
@@ -532,4 +553,193 @@
 		\]
 		Esto demuestra que ambas definiciones representan exactamente el mismo campo vectorial.
 	\end{proof}
+	
+	%================================================
+	% CAPÍTULO 7
+	%================================================
+	\section*{Capítulo 7: Introducción a la Teoría Geométrica Local}
+	
+	En el presente capítulo iniciamos el estudio del comportamiento geométrico de la foliación generada por un campo vectorial en la vecindad de un punto $p$ dado. Veremos que si $p$ es un punto regular, el problema queda resuelto satisfactoriamente, pero si $p$ es singular surge una teoría interesante de la cual sólo haremos una introducción.
+	
+	\subsection*{7.1 Estructura local de los puntos regulares}
+	
+	En esta sección, probaremos que si $p$ es un punto regular de un campo $X$, entonces en una vecindad suficientemente pequeña de $p$ podemos ``enderezar'' las órbitas de $X$. Para su demostración usaremos algunos resultados previos.
+	
+	En lo que sigue, el símbolo $\langle v_1, v_2, \dots, v_m \rangle$ denota al subespacio vectorial de $\mathbb{R}^n$ generado por los vectores $v_1, v_2, \dots, v_m$.
+	
+	\noindent \textbf{Definición 7.1.1} Sea $U \subseteq \mathbb{R}^n$ un abierto, $X \in \mathcal{X}^k(U)$ y $p \in U$. Una \textit{sección transversal local de clase $C^r$} al campo $X$ en el punto $p$, es una función $\sigma : V^{n-1} \to U$ de clase $C^r$ (en donde $V^{n-1}$ es un abierto conexo de $\mathbb{R}^{n-1}$) que satisface las siguientes propiedades:
+	\begin{enumerate}[label=\roman*)]
+		\item $\sigma$ es una inmersión de $V^{n-1}$ en $U$ (es decir, $\sigma'(x) \in \mathcal{L}(\mathbb{R}^{n-1}, \mathbb{R}^n)$ es inyectiva, $\forall \; x \in V^{n-1}$).
+		\item $\sigma : V^{n-1} \to \sigma(V^{n-1}) = \Sigma$ es un homeomorfismo.
+		\item $p \in \Sigma$.
+		\item $\sigma'(x)[\mathbb{R}^{n-1}_x] \oplus \langle X(\sigma(x)) \rangle = \mathbb{R}^n_{\sigma(x)}, \quad \forall \; x \in V^{n-1}$.
+	\end{enumerate}
+	
+	\noindent \textbf{Ejemplo 7.1.1} Sea $X \in \mathcal{X}^\infty(\mathbb{R}^2)$ definido por
+	\[
+	\begin{array}{rccc}
+		X : & \mathbb{R}^2 & \to & \mathbb{R}^2 \\
+		& (x, y) & \mapsto & X(x, y) = (x, -y).
+	\end{array}
+	\]
+	Sea $p = (1, 0) \in \mathbb{R}^2$ y consideremos la función
+	\[
+	\begin{array}{rccc}
+		\sigma : & {]-1, 1[} & \to & \mathbb{R}^2 \\
+		& t & \mapsto & \sigma(t) = (1, -t).
+	\end{array}
+	\]
+	Afirmo que $\sigma$ es una sección transversal local de clase $C^\infty$ al campo $X$ en el punto $p$. En efecto:
+	\begin{enumerate}[label=\roman*)]
+		\item $\sigma'(t) = (0, -1) \neq (0, 0), \quad \forall \; t \in {]-1, 1[}$. Así, $\sigma$ es una inmersión.
+		\item $\Sigma = \sigma({]-1, 1[}) = \{(1, t) \,;\, t \in {]-1, 1[}\}$, luego $\sigma : {]-1, 1[} \to \Sigma$ es un homeomorfismo.
+		\item $p = \sigma(0) \in \Sigma$.
+		\item $\sigma'(t)[\mathbb{R}] = \langle (0, 1) \rangle$ y $X(\sigma(t)) = X(1, -t) = (1, t), \quad \forall \; t \in {]-1, 1[}$. Luego:
+		\[
+		\sigma'(t)[\mathbb{R}] \oplus \langle X(\sigma(t)) \rangle = \mathbb{R}^2, \quad \forall \; t \in {]-1, 1[}.
+		\]
+	\end{enumerate}
+	
+	El siguiente resultado prueba la existencia de secciones transversales en vecindades de puntos regulares de campos de clase $C^k$.
+	
+	\noindent \textbf{Proposición 7.1.1} \textit{Si $U \subseteq \mathbb{R}^n$ es un abierto, $X \in \mathcal{X}^k(U)$ y $p \in U$ es un punto regular de $X$, entonces existe una sección transversal local $\sigma$ de clase $C^\infty$ al campo $X$ en el punto $p$ tal que $\sigma(0) = p$.}
+	
+	\begin{proof}
+		Como $p$ es un punto regular de $X$, entonces $X(p) \neq 0$, luego existen vectores $v_1, \dots, v_{n-1} \in \mathbb{R}^n$ tales que $\{v_1, \dots, v_{n-1}, X(p)\}$ es una base de $\mathbb{R}^n$.
+		
+		Afirmo que existe un $\delta > 0$ tal que $\{v_1, \dots, v_{n-1}, X(q)\}$ es base de $\mathbb{R}^n$, $\forall \; q \in B_\delta(p) \subseteq U$. En efecto, puesto que en caso contrario se tendría que para cualquier $\delta > 0$ existiría un $q_\delta \in B_\delta(p)$ tal que $X(q_\delta) \in \langle v_1, v_2, \dots, v_{n-1} \rangle$.
+		
+		De esta manera, dado cualquier $m \in \mathbb{Z}^+$, existe un punto $q_m \in B_{1/m}(p)$ tal que
+		\[
+		X(q_m) \in \langle v_1, v_2, \dots, v_{n-1} \rangle.
+		\]
+		Hemos construido así una sucesión $(q_m)_{m \in \mathbb{Z}^+} \subseteq U$ tal que $\lim_{m \to \infty} q_m = p$ y $X(q_m) \in \langle v_1, v_2, \dots, v_{n-1} \rangle$. Luego:
+		\[
+		\lim_{m \to \infty} X(q_m) = X(p) \quad \text{y} \quad X(p) \in \overline{\langle v_1, v_2, \dots, v_{n-1} \rangle} = \langle v_1, v_2, \dots, v_{n-1} \rangle,
+		\]
+		lo cual es una contradicción.
+		
+		Sea $M = \max\{\|v_1\|, \|v_2\|, \dots, \|v_{n-1}\|\}$ y considero $\varepsilon < \frac{\delta}{M(n-1)}$. Defino
+		\[
+		V^{n-1} = \{x \in \mathbb{R}^{n-1} \,;\, \|x\| < \varepsilon\}
+		\]
+		y
+		\[
+		\begin{array}{rccc}
+			\sigma : & V^{n-1} & \to & \mathbb{R}^n \\
+			& x & \mapsto & \sigma(x) = p + \displaystyle\sum_{j=1}^{n-1} x_j v_j.
+		\end{array}
+		\]
+		Observe que
+		\[
+		\|\sigma(x) - p\| = \left\| \sum_{j=1}^{n-1} x_j v_j \right\| \le \sum_{j=1}^{n-1} |x_j| \, \|v_j\| \le M \sum_{j=1}^{n-1} |x_j| \le M(n-1)\|x\| < M(n-1)\varepsilon < \delta,
+		\]
+		es decir, $\sigma(x) \in B_\delta(p) \subseteq U, \quad \forall \; x \in V^{n-1}$. Afirmo que $\sigma : V^{n-1} \to U$ es la sección transversal buscada. En efecto, claramente $\sigma$ es de clase $C^\infty$ y un fácil cálculo muestra que, dado $a = (a_1, \dots, a_{n-1}) \in \mathbb{R}^{n-1}$, se tiene
+		\[
+		\sigma'(x)(a) = \sum_{j=1}^{n-1} a_j v_j,
+		\]
+		luego se cumple:
+		\begin{enumerate}[label=\roman*)]
+			\item $\sigma'(x)(a) = 0 \iff \sum_{j=1}^{n-1} a_j v_j = 0 \iff a_j = 0, \; \forall \; 1 \le j \le n-1 \iff a = 0$. Por lo tanto, $\sigma'(x)$ es inyectiva, $\forall \; x \in V^{n-1}$.
+			\item Si $\Sigma = \sigma(V^{n-1})$ entonces $\sigma : V^{n-1} \to \Sigma$ es un homeomorfismo.
+			\item $p = \sigma(0) \in \Sigma$.
+			\item Como $\sigma'(x)(e_i) = v_i$ para todo $i = 1, \dots, n-1$, se tiene que
+			\[
+			\sigma'(x)[\mathbb{R}^{n-1}_x] = \langle v_1, v_2, \dots, v_{n-1} \rangle, \quad \forall \; x \in V^{n-1}.
+			\]
+			Se sigue que
+			\[
+			\sigma'(x)[\mathbb{R}^{n-1}_x] \oplus \langle X(\sigma(x)) \rangle = \mathbb{R}^n_{\sigma(x)}, \quad \forall \; x \in V^{n-1}. \qedhere
+			\]
+		\end{enumerate}
+	\end{proof}
+	
+	Otro resultado que necesitamos es el siguiente:
+	
+	\noindent \textbf{Teorema 7.1.2 (Teorema de la Función Inversa)} \textit{Sea $U \subseteq \mathbb{R}^n$ abierto, $f : U \to \mathbb{R}^n$ función de clase $C^k$ tal que $f'(a) \in \operatorname{GL}(\mathbb{R}^n)$ (donde $a \in U$), entonces existen $V_a \subseteq U$ y $W_a \subseteq \mathbb{R}^n$ abiertos con $a \in V_a$, $f(a) \in W_a$, tales que $\restr{f}{V_a} : V_a \to W_a$ es un difeomorfismo de clase $C^k$.}
+	
+	La prueba del Teorema de la Función Inversa el lector la puede encontrar en [16].
+	
+	\noindent \textbf{Teorema 7.1.3 (Teorema del Flujo Tubular)} \textit{Sea $U \subseteq \mathbb{R}^n$ abierto, $X \in \mathcal{X}^k(U)$ y $p \in U$ un punto regular. Dada una sección transversal local $\sigma : V \to \Sigma$ de clase $C^\infty$ a $X$ en $p$, con $0 \in V$ y $\sigma(0) = p$, entonces existe una vecindad $W_p$ de $p$ en $U$ y un difeomorfismo de clase $C^k$}
+	\[
+	h : W_p \to I_\varepsilon(0) \times B
+	\]
+	\textit{en donde $\varepsilon > 0$ y $B$ es una bola abierta en $\mathbb{R}^{n-1}$ centrada en el origen, tales que:}
+	\begin{enumerate}[label=\roman*)]
+		\item $h(\Sigma \cap W_p) = \{0\} \times B$.
+		\item $h$ \textit{es una conjugación de clase $C^k$ entre $\restr{X}{W_p}$ y el campo constante}
+		\[
+		Y : I_\varepsilon(0) \times B \to \mathbb{R}^n, \quad Y = (1, 0, 0, \dots, 0).
+		\]
+	\end{enumerate}
+	
+	\begin{proof}
+		Sea $\varphi : D \to U$ el flujo de $X$ y denotemos
+		\[
+		\widetilde{D} = \{(t, u) \in \mathbb{R} \times V \,;\, (t, \sigma(u)) \in D\} \subseteq \mathbb{R} \times \mathbb{R}^{n-1}.
+		\]
+		Definimos la función
+		\[
+		\begin{array}{rccc}
+			F : & \widetilde{D} & \to & U \\
+			& (t, u) & \mapsto & F(t, u) = \varphi(t, \sigma(u)).
+		\end{array}
+		\]
+		Claramente $F$ es de clase $C^k$. Geométricamente la función $F$ transforma líneas horizontales (órbitas del campo $Y$) en órbitas de $X$ que en el instante $0$ pasan por la sección transversal.
+		
+		Observe que $F(0, \mathbf{0}) = p$, vamos a probar que $F$ es un difeomorfismo local en $(0, \mathbf{0}) \in \mathbb{R} \times \mathbb{R}^{n-1}$. Por el Teorema de la Función Inversa, es suficiente probar que $F'(0, \mathbf{0})$ es un isomorfismo. En primer lugar, usando las notaciones del Análisis en varias variables reales tenemos
+		\begin{equation}\label{eq:71}
+			F'(0, \mathbf{0}) = \left[ \frac{\partial F}{\partial t}(0, \mathbf{0}), \frac{\partial F}{\partial u_1}(0, \mathbf{0}), \dots, \frac{\partial F}{\partial u_{n-1}}(0, \mathbf{0}) \right] \in \mathbb{R}^{n \times n}.
+		\end{equation}
+		Ahora bien, por un lado tenemos
+		\[
+		\frac{\partial F}{\partial t}(0, \mathbf{0}) = \frac{\partial \varphi}{\partial t}(0, \sigma(\mathbf{0})) = \frac{\partial \varphi}{\partial t}(0, p) = X(\varphi(0, p)) = X(p)
+		\]
+		y por otro lado
+		\[
+		\frac{\partial F}{\partial u_j}(0, \mathbf{0}) = \frac{\partial \varphi}{\partial t}(0, p) \cdot 0 + \frac{\partial \varphi}{\partial x_1}(0, p) \frac{\partial \sigma_1}{\partial u_j}(0) + \frac{\partial \varphi}{\partial x_2}(0, p) \frac{\partial \sigma_2}{\partial u_j}(0) + \dots + \frac{\partial \varphi}{\partial x_n}(0, p) \frac{\partial \sigma_n}{\partial u_j}(0).
+		\]
+		Pero $\varphi(0, x) = x$ implica $\frac{\partial \varphi}{\partial x_i}(0, p) = e_i$ para todo $1 \le i \le n$, de donde:
+		\[
+		\begin{aligned}
+			\frac{\partial F}{\partial u_j}(0, \mathbf{0}) &= \frac{\partial \sigma_1}{\partial u_j}(0) e_1 + \frac{\partial \sigma_2}{\partial u_j}(0) e_2 + \dots + \frac{\partial \sigma_n}{\partial u_j}(0) e_n \\
+			&= \left( \frac{\partial \sigma_1}{\partial u_j}(0), \frac{\partial \sigma_2}{\partial u_j}(0), \dots, \frac{\partial \sigma_n}{\partial u_j}(0) \right) \\
+			&= \frac{\partial \sigma}{\partial u_j}(0) = \sigma'(\mathbf{0}) e_j, \quad \forall \; 1 \le j \le n-1.
+		\end{aligned}
+		\]
+		Luego, reemplazando en \eqref{eq:71}:
+		\[
+		F'(0, \mathbf{0}) = \left[ X(p), \sigma'(0)e_1, \dots, \sigma'(0)e_{n-1} \right].
+		\]
+		Como $\sigma = (\sigma_1, \sigma_2, \dots, \sigma_n) : V \to \Sigma$ es una sección transversal, se cumple:
+		\[
+		\sigma'(0)[\mathbb{R}^{n-1}] \oplus \langle X(p) \rangle = \mathbb{R}^n,
+		\]
+		luego $F'(0, \mathbf{0}) \in \operatorname{GL}(\mathbb{R}^n)$. Por el Teorema de la Función Inversa, existe $\varepsilon = \varepsilon(p) > 0$, existe $B \subseteq \mathbb{R}^{n-1}$ bola abierta centrada en $0 \in \mathbb{R}^{n-1}$ y existe $W_p$ vecindad abierta de $p$ en $U$ tal que
+		\[
+		\restr{F}{I_\varepsilon(0) \times B} : I_\varepsilon(0) \times B \to W_p
+		\]
+		es un difeomorfismo de clase $C^k$. Consideremos
+		\[
+		h = \left( \restr{F}{I_\varepsilon(0) \times B} \right)^{-1} : W_p \to I_\varepsilon(0) \times B.
+		\]
+		Como $(0, u) \in I_\varepsilon(0) \times B$ es tal que $F(0, u) = \varphi(0, \sigma(u)) = \sigma(u) \in \Sigma \cap W_p$, concluimos que $h(\Sigma \cap W_p) = \{0\} \times B$.
+		
+		Finalmente, para $(t, u) \in I_\varepsilon(0) \times B$, tenemos
+		\[
+		\begin{aligned}
+			(h^{-1})'(t, u) \cdot Y(t, u) &= F'(t, u) \cdot (1, 0, \dots, 0) = \frac{\partial F}{\partial t}(t, u) \\
+			&= \frac{\partial \varphi}{\partial t}(t, \sigma(u)) = X(\varphi(t, \sigma(u))) \\
+			&= X(F(t, u)) = X(h^{-1}(t, u)),
+		\end{aligned}
+		\]
+		luego $h^{-1}$ es una $C^k$-conjugación entre $Y$ y $X$, y por lo tanto $h$ es una $C^k$-conjugación entre $\restr{X}{W_p}$ e $Y$.
+	\end{proof}
+	
+	En muchas ocasiones estamos interesados en conocer cómo son las órbitas de un campo en la vecindad de un punto dado. Surge de esta manera el concepto de \textit{conjugación local}.
+	
+	\noindent \textbf{Definición 7.1.2} Sean $U_1, U_2 \subseteq \mathbb{R}^n$ abiertos, $X_1 \in \mathcal{X}^k(U_1)$, $X_2 \in \mathcal{X}^k(U_2)$, $p_1 \in U_1$, $p_2 \in U_2$ y $\varphi_1 : D_1 \to U_1$, $\varphi_2 : D_2 \to U_2$ los flujos asociados a los campos $X_1$ y $X_2$ respectivamente. Decimos que $X_1$ y $X_2$ son \textbf{localmente topológicamente} (resp. $C^r$) \textbf{conjugados} en $p_1$ y $p_2$ si y sólo si existen vecindades abiertas $V_1 \subseteq U_1$ y $V_2 \subseteq U_2$ de $p_1$ y $p_2$ respectivamente y un homeomorfismo (resp. difeomorfismo de clase $C^r$) $h : V_1 \to V_2$ llamado \textbf{conjugación topológica} (resp. de clase $C^r$) \textbf{local} tal que
+	\[
+	h(\varphi_1(t, x)) = \varphi_2(t, h(x)), \quad \forall \; x \in V_1, \quad \forall \; t \in I(x).
+	\]
 \end{document}

@@ -442,6 +442,160 @@
 	\]
 	donde $X(f) = \nabla f \cdot X = \sum_{i=1}^n X_i \frac{\partial f}{\partial x_i}$ denota la derivada direccional de $f$ a lo largo de $X$.
 	
+	\begin{proof}
+		Sean
+		\[
+		X=\sum_{i=1}^{n}X_i\frac{\partial}{\partial x_i},
+		\qquad
+		Y=\sum_{j=1}^{n}Y_j\frac{\partial}{\partial x_j}
+		\]
+		dos campos vectoriales sobre $U$, y sea $f\in C^\infty(U)$.
+		
+		Por definición de la acción de un campo vectorial sobre una función,
+		\[
+		X(f)=\sum_{i=1}^{n}X_i\frac{\partial f}{\partial x_i},
+		\qquad
+		Y(f)=\sum_{j=1}^{n}Y_j\frac{\partial f}{\partial x_j}.
+		\]
+		
+		Aplicando sucesivamente los campos vectoriales, obtenemos
+		\[
+		\begin{aligned}
+			X(Y(f))
+			&=\sum_{i=1}^{n}X_i
+			\frac{\partial}{\partial x_i}
+			\left(\sum_{j=1}^{n}Y_j
+			\frac{\partial f}{\partial x_j}\right)\\
+			&=\sum_{i,j=1}^{n}X_i
+			\frac{\partial Y_j}{\partial x_i}
+			\frac{\partial f}{\partial x_j}
+			+\sum_{i,j=1}^{n}X_iY_j
+			\frac{\partial^2 f}{\partial x_i\partial x_j}.
+		\end{aligned}
+		\]
+		
+		Análogamente,
+		\[
+		\begin{aligned}
+			Y(X(f))
+			&=\sum_{i=1}^{n}Y_i
+			\frac{\partial}{\partial x_i}
+			\left(\sum_{j=1}^{n}X_j
+			\frac{\partial f}{\partial x_j}\right)\\
+			&=\sum_{i,j=1}^{n}Y_i
+			\frac{\partial X_j}{\partial x_i}
+			\frac{\partial f}{\partial x_j}
+			+\sum_{i,j=1}^{n}Y_iX_j
+			\frac{\partial^2 f}{\partial x_i\partial x_j}.
+		\end{aligned}
+		\]
+		
+		Por definición del conmutador de operadores,
+		\[
+		[X,Y](f)=X(Y(f))-Y(X(f)).
+		\]
+		
+		Restando las expresiones anteriores, resulta
+		\[
+		\begin{aligned}
+			[X,Y](f)
+			={}&\sum_{i,j=1}^{n}X_i
+			\frac{\partial Y_j}{\partial x_i}
+			\frac{\partial f}{\partial x_j}\\
+			&-\sum_{i,j=1}^{n}Y_i
+			\frac{\partial X_j}{\partial x_i}
+			\frac{\partial f}{\partial x_j}\\
+			&+\sum_{i,j=1}^{n}X_iY_j
+			\frac{\partial^2 f}{\partial x_i\partial x_j}\\
+			&-\sum_{i,j=1}^{n}Y_iX_j
+			\frac{\partial^2 f}{\partial x_i\partial x_j}.
+		\end{aligned}
+		\]
+		
+		Intercambiando los índices $i$ y $j$ en la última suma y utilizando la igualdad de las derivadas parciales mixtas,
+		\[
+		\frac{\partial^2 f}{\partial x_i\partial x_j}
+		=
+		\frac{\partial^2 f}{\partial x_j\partial x_i},
+		\]
+		los términos que contienen segundas derivadas de $f$ se cancelan. Por tanto,
+		\[
+		\begin{aligned}
+			[X,Y](f)
+			={}&\sum_{i,j=1}^{n}X_i
+			\frac{\partial Y_j}{\partial x_i}
+			\frac{\partial f}{\partial x_j}\\
+			&-\sum_{i,j=1}^{n}Y_i
+			\frac{\partial X_j}{\partial x_i}
+			\frac{\partial f}{\partial x_j}.
+		\end{aligned}
+		\]
+		
+		Agrupando los términos según las derivadas parciales de $f$, obtenemos
+		\[
+		[X,Y](f)
+		=\sum_{j=1}^{n}
+		\left(
+		\sum_{i=1}^{n}X_i\frac{\partial Y_j}{\partial x_i}
+		-\sum_{i=1}^{n}Y_i\frac{\partial X_j}{\partial x_i}
+		\right)
+		\frac{\partial f}{\partial x_j}.
+		\]
+		
+		Por la expresión analítica del corchete de Lie,
+		\[
+		[X,Y]=DY\,X-DX\,Y,
+		\]
+		cuyas componentes son
+		\[
+		[X,Y]_j
+		=\sum_{i=1}^{n}X_i\frac{\partial Y_j}{\partial x_i}
+		-\sum_{i=1}^{n}Y_i\frac{\partial X_j}{\partial x_i},
+		\]
+		se concluye que
+		\[
+		\boxed{[X,Y](f)=X(Y(f))-Y(X(f)).}
+		\]
+		
+		Finalmente, demostramos la unicidad. Supongamos que $Z$ es otro
+		campo vectorial que satisface
+		\[
+		Z(f)=X(Y(f))-Y(X(f)),
+		\qquad \forall f\in C^\infty(U).
+		\]
+		Por la identidad ya demostrada,
+		\[
+		Z(f)=[X,Y](f),
+		\qquad \forall f\in C^\infty(U).
+		\]
+		
+		Tomando las funciones coordenadas $f(x)=x_k$, para
+		$k=1,\ldots,n$, obtenemos
+		\[
+		Z(x_k)=[X,Y](x_k).
+		\]
+		Si escribimos
+		\[
+		Z=\sum_{k=1}^{n}Z_k\frac{\partial}{\partial x_k},
+		\]
+		entonces $Z(x_k)=Z_k$ y, análogamente,
+		$[X,Y](x_k)=[X,Y]_k$. Por consiguiente,
+		\[
+		Z_k=[X,Y]_k,\qquad k=1,\ldots,n.
+		\]
+		Así, ambos campos vectoriales tienen las mismas componentes y,
+		por tanto, $Z=[X,Y]$.
+		
+		En conclusión, el corchete de Lie es el único campo vectorial que
+		satisface
+		\[
+		\boxed{
+			[X,Y](f)=X(Y(f))-Y(X(f)),
+			\qquad \forall f\in C^\infty(U).
+		}
+		\]
+	\end{proof}
+	```
 	\subsection*{Propiedades Fundamentales}
 	
 	Para cualesquiera $X, Y, Z \in \mathcal{X}^1(U)$, $a, b \in \mathbb{R}$ y $f, g \in C^\infty(U)$:

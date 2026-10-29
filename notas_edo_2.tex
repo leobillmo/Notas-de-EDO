@@ -1,0 +1,238 @@
+% !TEX program = pdflatex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[expansion=false]{microtype}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{xcolor}
+\geometry{margin=2.7cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue!60!black,
+	urlcolor=blue!60!black,
+	citecolor=blue!60!black
+}
+
+%------------------------------------------------
+% Entornos
+%------------------------------------------------
+\theoremstyle{definition}
+\newtheorem{definicion}{Definición}[section]
+\newtheorem{ejemplo}{Ejemplo}[section]
+
+\theoremstyle{plain}
+\newtheorem{proposicion}{Proposición}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{corolario}{Corolario}[section]
+\newtheorem{lema}{Lema}[section]
+
+\theoremstyle{remark}
+\newtheorem{observacion}{Observación}[section]
+
+%------------------------------------------------
+% Comandos
+%------------------------------------------------
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\I}{[0,1]}
+\newcommand{\Hol}{\mathcal H}
+\newcommand{\OO}{\mathcal O}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\restr}[2]{\left.#1\right|_{#2}}
+
+\title{\textbf{Notas de EDO 2}}
+\author{}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section{Miércoles 28 de octubre}
+
+	\begin{definicion}
+		Sea $\mathbb{E}$ un espacio vectorial de dimensión finita y $\varphi : \mathbb{R} \times \mathbb{E} \to \mathbb{E}$ el flujo de un campo vectorial $X \in \mathcal{X}^1(\mathbb{E})$. Decimos que:
+		\begin{itemize}
+			\item $\varphi$ es un \textbf{flujo lineal} si para todo $t \in \mathbb{R}$ la aplicación $\varphi_t : \mathbb{E} \to \mathbb{E}$, $\varphi_t(x) \coloneqq \varphi(t,x)$, es lineal.
+			\item $\varphi$ es un \textbf{flujo cuasi-lineal} (o polinomial) si para todo $t \in \mathbb{R}$ la aplicación $\varphi_t : \mathbb{E} \to \mathbb{E}$ es polinomial.
+		\end{itemize}
+	\end{definicion}
+
+	\begin{proposicion}
+		Sea $\mathbb{E}$ un espacio vectorial de dimensión finita y $\varphi : \mathbb{R} \times \mathbb{E} \to \mathbb{E}$ el flujo de un campo vectorial $X \in \mathcal{X}^1(\mathbb{E})$. Entonces $\varphi$ es un flujo lineal si y sólo si existe una única matriz $A \in \mathcal{M}_n(\mathbb{R})$ tal que
+		\[
+			\varphi_t(x) = e^{tA}\,x, \quad \forall \; t \in \mathbb{R}, \quad \forall \; x \in \mathbb{E}.
+		\]
+	\end{proposicion}
+
+	\begin{proof}
+		\textbf{($\Leftarrow$)} Si $\varphi_t(x) = e^{tA}x$ para alguna matriz $A$, entonces para cada $t \in \mathbb{R}$ la aplicación $\varphi_t$ es la multiplicación por la matriz $e^{tA}$, que es claramente lineal. Luego $\varphi$ es un flujo lineal.
+
+		\textbf{($\Rightarrow$)} Supongamos que $\varphi$ es un flujo lineal, es decir, $\varphi_t \in \operatorname{GL}(\mathbb{E})$ para todo $t \in \mathbb{R}$. Fijada una base de $\mathbb{E}$, identificamos $\mathbb{E} \cong \mathbb{R}^n$ y $\varphi_t$ con una matriz en $\mathcal{M}_n(\mathbb{R})$; abusando de notación escribimos $\varphi_t$ para dicha matriz.
+
+		Como $\varphi$ es un flujo, satisface las propiedades de grupo:
+		\begin{enumerate}[label=\roman*)]
+			\item $\varphi_0 = \operatorname{id}_{\mathbb{E}}$, es decir, $\varphi_0 = I_n$.
+			\item $\varphi_{t+s} = \varphi_t \circ \varphi_s$ para todo $t, s \in \mathbb{R}$.
+			\item La aplicación $t \mapsto \varphi_t$ es de clase $C^1$.
+		\end{enumerate}
+		Diferenciando la identidad de flujo $\varphi_{t+s} = \varphi_t \circ \varphi_s$ con respecto a $s$ en $s = 0$ obtenemos
+		\[
+			\frac{d}{dt}\varphi_t = \frac{d}{ds}\Big|_{s=0} \varphi_{t+s} = \frac{d}{ds}\Big|_{s=0} \bigl(\varphi_t \circ \varphi_s\bigr) = \varphi_t \cdot \underbrace{\frac{d}{ds}\Big|_{s=0} \varphi_s}_{=:\, A},
+		\]
+		donde $A \coloneqq \dot{\varphi}_0 \in \mathcal{M}_n(\mathbb{R})$. Así, $t \mapsto \varphi_t$ satisface el problema de valor inicial matricial
+		\[
+			\left|
+			\begin{array}{lcl}
+				\dot{M}(t) &=& M(t)\,A, \\
+				M(0) &=& I_n.
+			\end{array}
+			\right.
+		\]
+		La única solución de este P.V.I. es $M(t) = e^{tA}$ (exponencial matricial), de donde
+		\[
+			\varphi_t(x) = e^{tA}\,x, \quad \forall \; t \in \mathbb{R}, \quad \forall \; x \in \mathbb{E}.
+		\]
+		La unicidad de $A$ se sigue de que $A = \dot{\varphi}_0$ queda determinada unívocamente por el flujo. En efecto, si existiese $B \in \mathcal{M}_n(\mathbb{R})$ tal que $e^{tB} = e^{tA}$ para todo $t \in \mathbb{R}$, diferenciando en $t = 0$ se obtiene $B = A$.
+	\end{proof}
+
+	\begin{proposicion}
+		Sea $\mathbb{E} \cong \mathbb{R}^n$ y $\varphi : \mathbb{R} \times \mathbb{E} \to \mathbb{E}$ un flujo polinomial. Entonces para todo $t \in \mathbb{R}$ existe una única constante $c(t) > 0$ tal que
+		\[
+			\det\bigl(D\varphi_t(x)\bigr) = c(t), \quad \forall \; x \in \mathbb{E}.
+		\]
+	\end{proposicion}
+
+	\begin{proof}
+		Fijemos $t \in \mathbb{R}$. Dado que $\varphi$ es un flujo polinomial, la aplicación $\varphi_t : \mathbb{E} \to \mathbb{E}$ es polinomial y, siendo parte de un flujo, es un difeomorfismo con inversa $\varphi_{-t}$, que también es polinomial.
+
+		\textbf{Paso 1: $\det(D\varphi_t(\,\cdot\,))$ es una función polinomial.}
+
+		Como $\varphi_t$ es polinomial, su diferencial $D\varphi_t(x)$ es una matriz cuyas entradas son polinomios en $x$. Por definición del determinante (como suma de productos de entradas), $\det(D\varphi_t(x))$ es a su vez un polinomio en $x$. Denotemos $p(x) \coloneqq \det(D\varphi_t(x)) \in \mathbb{R}[x_1, \dots, x_n]$.
+
+		\textbf{Paso 2: $p$ es una constante no nula.}
+
+		De la propiedad de grupo del flujo $\varphi_t \circ \varphi_{-t} = \operatorname{id}_{\mathbb{E}}$, la regla de la cadena da
+		\[
+			D\varphi_t\!\left(\varphi_{-t}(x)\right) \cdot D\varphi_{-t}(x) = I_n, \quad \forall \; x \in \mathbb{E},
+		\]
+		de donde, tomando determinantes,
+		\[
+			\det\!\left(D\varphi_t(\varphi_{-t}(x))\right) \cdot \det\!\left(D\varphi_{-t}(x)\right) = 1, \quad \forall \; x \in \mathbb{E}.
+		\]
+		Sea $q(y) \coloneqq \det(D\varphi_{-t}(y)) \in \mathbb{R}[y_1, \dots, y_n]$. Sustituyendo $x \mapsto \varphi_t(x)$ en la identidad anterior:
+		\[
+			p(x) \cdot q\!\left(\varphi_t(x)\right) = 1, \quad \forall \; x \in \mathbb{E}.
+		\]
+		Como $\varphi_t$ es polinomial, la composición $r(x) \coloneqq q(\varphi_t(x))$ es un polinomio en $x$, y se tiene
+		\[
+			p \cdot r = 1 \quad \text{en } \mathbb{R}[x_1, \dots, x_n].
+		\]
+		Como $\mathbb{R}[x_1, \dots, x_n]$ es un dominio de integridad cuyos únicos elementos invertibles son las constantes no nulas, concluimos que $p$ es una constante, es decir, existe $c(t) \in \mathbb{R}\setminus\{0\}$ tal que
+		\[
+			\det(D\varphi_t(x)) = c(t), \quad \forall \; x \in \mathbb{E}.
+		\]
+
+		\textbf{Paso 3: $c(t) > 0$.}
+
+		En $t = 0$, como $\varphi_0 = \operatorname{id}_{\mathbb{E}}$, se tiene $D\varphi_0(x) = I_n$ para todo $x$, luego $c(0) = \det(I_n) = 1 > 0$. La función $t \mapsto c(t) = \det(D\varphi_t(x_0))$ (evaluada en cualquier $x_0$ fijo) es continua en $t$ y satisface $c(0) = 1 > 0$, $c(t) \neq 0$ para todo $t$. Por el teorema del valor intermedio, $c(t) > 0$ para todo $t \in \mathbb{R}$.
+
+		\textbf{Unicidad.} Si existiera $\tilde{c}(t) > 0$ con $\det(D\varphi_t(x)) = \tilde{c}(t)$ para todo $x$, evaluando en cualquier $x_0 \in \mathbb{E}$ se obtiene $\tilde{c}(t) = \det(D\varphi_t(x_0)) = c(t)$.
+	\end{proof}
+
+	\textbf{Ejercicios}
+	\begin{enumerate}
+		\item Si $\varphi$ es un flujo polinomial, demuestre que para cada $t>0$, existe $m=m(t)$ con $gra(\varphi_t)\leq m, \forall t\in [-t,t]$
+		\item Si $\varphi$ es polinomial y $X$ es su campo entonces 
+		\begin{enumerate}
+			\item $X$ es polinomial
+			\item $div X$ es constante, digamos $div X = \lambda$ y $det(D\varphi_t(x)= e^{\lambda t})$
+		\end{enumerate}
+		\item Si $\varphi$ es un flujo polinomial, demuestre que existe $m\in N$ independiente de $t\in R$ tal que
+		
+		$$\varphi_t(x)=\sum_{|\alpha|\leq m}a_\alpha (t) x^\alpha, a_\alpha(t)\in R^n$$
+		
+		[1]H. BOSS, G. Meisters, Polynomial flows in the plane, advances in mathematics 55 (1985) 
+	\end{enumerate}
+	
+	\textbf{Ejemplos}
+	
+	\begin{enumerate}
+		\item $X(x)= Ax, A\in \R^{n\times n}$
+		Entonces su flujo es $\varphi_t(x)= e^{tA}x$ y su diferencial $Df_t(x)= e^{tA}$. Su determinante es $det(D\varphi_t)(x)= e^{traz(A)}$
+	\end{enumerate}
+	
+	\begin{proposicion}
+		Sean $A,B,C\in \mathcal{M}_n(\mathbb{R})$ tales que $BC=CA$. Entonces $e^{tB}C=Ce^{tA}$ para todo $t\in\mathbb{R}$.
+
+		En particular, si $AB=BA$ entonces $e^{tA}B=Be^{tA}$ y
+		\[
+			e^{tA}e^{tB} = e^{t(A+B)}, \quad \forall\; t\in\mathbb{R}.
+		\]
+	\end{proposicion}
+
+	\begin{observacion}
+		La condición $AB = BA$ es esencial: en general, $e^{A+B} \neq e^A e^B$. La fórmula de Baker-Campbell-Hausdorff cuantifica precisamente la diferencia en términos del conmutador $[A,B] \coloneqq AB - BA$.
+	\end{observacion}
+
+	\begin{teorema}[Baker-Campbell-Hausdorff]
+		Sean $A, B \in \mathcal{M}_n(\mathbb{R})$. Entonces
+		\[
+			e^A e^B = e^{A + B + \frac{1}{2}[A,B] + \frac{1}{12}\bigl([A,[A,B]] + [B,[B,A]]\bigr) + \cdots},
+		\]
+		donde los términos omitidos son combinaciones $\mathbb{Q}$-lineales de conmutadores iterados de $A$ y $B$. Más precisamente, existe un único elemento $Z$ de la álgebra de Lie libre generada por $A$ y $B$ tal que $e^A e^B = e^Z$, dado por la serie
+		\[
+			Z = \sum_{n=1}^{\infty} Z_n,
+		\]
+		donde $Z_n$ es una suma de conmutadores anidados de grado $n$ en $A$ y $B$. Los primeros términos son:
+		\begin{align*}
+			Z_1 &= A + B, \\
+			Z_2 &= \frac{1}{2}[A,B], \\
+			Z_3 &= \frac{1}{12}\bigl([A,[A,B]] - [B,[A,B]]\bigr), \\
+			Z_4 &= -\frac{1}{24}[B,[A,[A,B]]].
+		\end{align*}
+		La serie converge (en norma operador) cuando $\|A\|$ y $\|B\|$ son suficientemente pequeñas.
+	\end{teorema}
+
+	\begin{proof}[Esquema de la demostración]
+		Definamos $Z(t)$ implícitamente por $e^{Z(t)} = e^{tA}e^{tB}$. Diferenciando respecto a $t$ y usando la fórmula
+		\[
+			\frac{d}{dt}e^{Z(t)} = e^{Z(t)}\,\Psi\!\left(\operatorname{ad}_{Z(t)}\right)\!\dot{Z}(t), \quad \Psi(z) \coloneqq \frac{e^z - 1}{z} = \sum_{k=0}^{\infty}\frac{z^k}{(k+1)!},
+		\]
+		donde $\operatorname{ad}_X(Y) \coloneqq [X,Y]$, se obtiene la ecuación diferencial
+		\[
+			\dot{Z}(t) = \Psi\!\left(\operatorname{ad}_{Z(t)}\right)^{-1}(A + e^{t\operatorname{ad}_A}B).
+		\]
+		Resolviendo esta ecuación por iteración con condición inicial $Z(0) = 0$ e integrando en $[0,1]$, se obtiene la serie BCH.
+	\end{proof}
+
+	\begin{corolario}
+		Si $[A,B] = 0$ (i.e., $A$ y $B$ conmutan), entonces $Z_n = 0$ para todo $n \geq 2$ y la fórmula BCH reduce a
+		\[
+			e^A e^B = e^{A+B}.
+		\]
+	\end{corolario}
+	Sean $X=Ax$, $Y=Bx$ campos lineales entonces
+	$\varphi_t(x)^X=e^{tA}, \quad \varphi_t^Y(x)=e^{tB}$
+	
+	$$[X,Y]=0\leftrightarrow [A,B]=0$$
+	
+	$$[X,Y]=\neq 0\leftrightarrow [A,B]\neq 0$$
+	
+	Sea $X$ un campo vectorial $C^k(k\geq 1)$ definido en un abierto $U\subseteq \R^n$
+	
+	$$X(f)(p)= X(p)f = df(p)X(p), \forall f\in C^\infty $$
+	Entonces $X$ se puede ver como 
+	$$X:C^\infty (U) \to C^\infty (U), f\to X(f):U \to \R$$
+	es una derivación 
+\end{document}
